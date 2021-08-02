@@ -1,0 +1,32 @@
+<section>
+  <h1>This is <%= @user.email %>'s profile page.</h1>
+
+  <div>
+    <% if @user.avatar.attached? %>
+      <%= image_tag @user.avatar, style: 'width: 200px'%>
+    <% end %>
+  </div>
+
+  <div>
+    <p>Username: <%= @user.username %></p>
+    <p>Birth: <%= @user.birth_date %></p>
+  </div>
+
+  <%= form_for @post do |f| %>
+    <%= render 'shared/error_message', object: @post %>
+    <%= f.file_field :photo %>
+    <%= f.label :caption %>
+    <%= f.text_field :caption %>
+    <%= f.submit 'Post' %>
+  <% end %>
+
+  <% @posts.each do |post| %>
+    <% if post.photo.attached? %>
+      <%= image_tag post.photo, style: 'width: 200px'%>
+    <% end %>
+    <%= post.caption %>
+    <%= link_to 'Show', post_path(post) %>
+    <%= link_to 'Edit', edit_post_path(post) %>
+    <%= link_to 'Delete', post_path(post), method: :delete %>
+  <% end %>
+</section>
